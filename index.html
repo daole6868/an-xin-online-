@@ -1,0 +1,923 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- PAGE:START -->
+<title>Ăn Xin Online</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Xin lòng hảo tâm. Quét mã QR, bao chủ bát một gói mì tôm. Ít thì 5 nghìn, nhiều thì không giới hạn.">
+<meta property="og:title" content="Ăn Xin Online · Xin lòng hảo tâm">
+<meta property="og:description" content="Quét mã QR, bao chủ bát một gói mì tôm. Ít thì 5 nghìn, nhiều thì không giới hạn.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#c99c5f">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&family=Sriracha&display=swap">
+<style>
+/* Layout: a street-corner page — a cardboard sign and the owner's profile on the left,
+   the tin bowl (QR + transfer receipt) pinned on the right; the petition, price list,
+   honour roll and FAQ scroll under the sign. One column on phones: sign, bowl, the rest. */
+:root{
+  --ground:#e6e4de;        /* sidewalk concrete */
+  --paper:#fbfaf6;         /* petition paper, cards */
+  --paper-2:#f2f0e9;
+  --kraft:#c99c5f;         /* cardboard */
+  --kraft-deep:#9d7342;
+  --kraft-ink:#221a10;     /* marker on cardboard: same in both themes */
+  --ink:#1f1d19;
+  --muted:#686357;
+  --line:#d3cfc4;
+  --stamp:#c42a1f;         /* red seal: the accent */
+  --stamp-ink:#ffffff;
+  --stamp-soft:#f6dcd6;
+  --tin:#a7adb1;           /* aluminium bowl */
+  --tin-deep:#6f777c;
+  --coin:#e0b13c;
+  --good:#2f7a4b;
+  --pen:#1f4aa0;           /* ballpoint blue for filled-in form fields */
+  --shadow:0 1px 0 rgba(40,30,15,.06),0 12px 30px -14px rgba(40,30,15,.35);
+
+  --display:"Sriracha","Patrick Hand","Comic Sans MS",cursive;
+  --body:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+
+  --step--1:.8125rem; --step-0:1rem; --step-1:1.1875rem; --step-2:1.5rem; --step-3:2rem; --step-4:clamp(2.1rem,1.4rem + 2.6vw,3.25rem);
+  --radius:10px;
+  --top:64px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#181714; --paper:#23211d; --paper-2:#2b2924; --kraft:#b98d52; --kraft-deep:#8a6438; --kraft-ink:#1d150b;
+    --ink:#efebe2; --muted:#a8a294; --line:#3b3832; --stamp:#e5493d; --stamp-ink:#1a0b09; --stamp-soft:#3c1f1b;
+    --tin:#8b9297; --tin-deep:#5d6469; --coin:#e7bb4d; --good:#5fbf84; --pen:#93b2ee;
+    --shadow:0 1px 0 rgba(0,0,0,.3),0 14px 34px -16px rgba(0,0,0,.8);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#181714; --paper:#23211d; --paper-2:#2b2924; --kraft:#b98d52; --kraft-deep:#8a6438; --kraft-ink:#1d150b;
+  --ink:#efebe2; --muted:#a8a294; --line:#3b3832; --stamp:#e5493d; --stamp-ink:#1a0b09; --stamp-soft:#3c1f1b;
+  --tin:#8b9297; --tin-deep:#5d6469; --coin:#e7bb4d; --good:#5fbf84; --pen:#93b2ee;
+  --shadow:0 1px 0 rgba(0,0,0,.3),0 14px 34px -16px rgba(0,0,0,.8);
+  color-scheme:dark;
+}
+
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--top) + env(safe-area-inset-top,0px) + 12px)}
+body{margin:0;background:var(--ground);color:var(--ink);font:400 var(--step-0)/1.6 var(--body);-webkit-font-smoothing:antialiased}
+img{max-width:100%}
+h1,h2,h3{text-wrap:balance;margin:0;line-height:1.15}
+p{margin:0}
+a{color:inherit}
+button,input{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--stamp);outline-offset:2px;border-radius:6px}
+.num{font-variant-numeric:tabular-nums}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---------- top bar ---------- */
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.topbar-in{max-width:1180px;margin:0 auto;height:var(--top);display:flex;align-items:center;gap:20px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font:400 1.35rem/1 var(--display);white-space:nowrap}
+.brand svg{width:34px;height:24px;flex:none}
+.nav{display:flex;gap:4px;margin-left:auto}
+.nav a{text-decoration:none;font-size:var(--step--1);font-weight:500;color:var(--muted);padding:8px 10px;border-radius:8px}
+.nav a:hover{color:var(--ink);background:var(--paper-2)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;cursor:pointer;text-decoration:none;font-weight:700;border-radius:999px;padding:10px 18px;line-height:1.2;transition:transform .15s ease,background-color .15s ease}
+.btn:active{transform:translateY(1px)}
+.btn-stamp{background:var(--stamp);color:var(--stamp-ink)}
+.btn-stamp:hover{background:color-mix(in srgb,var(--stamp) 88%,var(--ink))}
+.btn-ghost{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--line)}
+.btn-ghost:hover{box-shadow:inset 0 0 0 1.5px var(--ink)}
+.btn-sm{padding:6px 12px;font-size:var(--step--1)}
+@media (max-width:860px){.nav{display:none}.topbar .btn{margin-left:auto}}
+
+.demo{background:var(--stamp-soft);border-bottom:1px solid color-mix(in srgb,var(--stamp) 35%,transparent)}
+.demo p{max-width:1180px;margin:0 auto;padding-block:10px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));font-size:var(--step--1)}
+.demo strong{color:var(--stamp)}
+.demo code{font-family:var(--mono);font-size:.95em}
+
+/* ---------- page grid ---------- */
+.layout{max-width:1180px;margin:0 auto;padding-block:36px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,400px);grid-template-areas:"hero bowl" "rest bowl";grid-template-rows:auto 1fr;column-gap:48px;row-gap:56px}
+.hero{grid-area:hero;min-width:0}
+.bowl{grid-area:bowl;align-self:start}
+.rest{grid-area:rest;min-width:0;display:grid;gap:64px}
+.stats{display:grid;gap:16px;margin-top:-28px}
+@media (max-width:900px){.stats{margin-top:0}}
+@media (min-width:901px) and (min-height:880px){.bowl{position:sticky;top:calc(var(--top) + env(safe-area-inset-top,0px) + 20px)}}
+@media (max-width:900px){
+  .layout{grid-template-columns:minmax(0,1fr);grid-template-areas:"hero" "bowl" "rest";grid-template-rows:auto;row-gap:40px;padding-block:24px 48px}
+}
+
+/* ---------- hero: cardboard sign ---------- */
+.hero{display:grid;gap:28px}
+.sign-wrap{position:relative;padding:14px 8px 8px}
+.sign{position:relative;background:
+    repeating-linear-gradient(90deg,rgba(0,0,0,.035) 0 2px,transparent 2px 9px),
+    radial-gradient(120% 90% at 20% 10%,color-mix(in srgb,var(--kraft) 80%,#fff) 0,var(--kraft) 55%,var(--kraft-deep) 130%);
+  color:var(--kraft-ink);padding:38px clamp(22px,4vw,48px) 34px;transform:rotate(-1.6deg);box-shadow:var(--shadow);
+  clip-path:polygon(0 3%,6% 0,19% 2%,33% .4%,48% 2.2%,62% .2%,78% 1.8%,91% 0,100% 2.5%,99.2% 22%,100% 46%,99% 71%,100% 97%,86% 100%,70% 98.4%,53% 100%,37% 98.6%,21% 100%,8% 98.2%,0 100%,.8% 74%,0 49%,1% 24%)}
+.sign::after{content:"";position:absolute;inset:0;background:radial-gradient(60% 50% at 85% 85%,rgba(60,35,10,.18),transparent 70%);pointer-events:none}
+.tape{position:absolute;top:2px;width:86px;height:26px;background:color-mix(in srgb,var(--paper) 55%,transparent);box-shadow:0 1px 2px rgba(0,0,0,.08);z-index:2}
+.tape.l{left:8%;transform:rotate(-8deg)}
+.tape.r{right:9%;transform:rotate(6deg)}
+.sign .kicker{font:400 var(--step-1)/1.2 var(--display);letter-spacing:.06em;opacity:.8}
+.sign h1{font:400 var(--step-4)/1.05 var(--display);margin-top:6px;letter-spacing:.01em}
+.sign .big{display:block;font-size:1.25em}
+.sign .hl{background:linear-gradient(transparent 58%,color-mix(in srgb,var(--stamp) 55%,transparent) 58% 88%,transparent 88%);padding:0 .1em}
+.sign .lines{margin-top:18px;display:grid;gap:4px;font:400 var(--step-2)/1.3 var(--display)}
+.sign .lines s{text-decoration-thickness:3px;text-decoration-color:var(--stamp)}
+.sign .arrow{display:flex;align-items:center;gap:10px;margin-top:20px;font:400 var(--step-1)/1.2 var(--display)}
+.sign .arrow svg{width:72px;height:30px;flex:none}
+@media (max-width:900px){.sign .arrow svg{transform:rotate(90deg);width:40px}}
+.arrow .on-wide{display:inline}.arrow .on-narrow{display:none}
+@media (max-width:900px){.arrow .on-wide{display:none}.arrow .on-narrow{display:inline}}
+
+.profile{display:flex;gap:16px;align-items:center}
+.avatar{width:68px;height:68px;border-radius:50%;flex:none;display:grid;place-items:center;background:var(--paper);box-shadow:inset 0 0 0 2px var(--kraft);font:400 1.8rem/1 var(--display);color:var(--kraft-deep);overflow:hidden}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.profile h2{font:700 var(--step-2)/1.2 var(--body)}
+.profile .handle{color:var(--muted);font-size:var(--step--1)}
+.profile .bio{font-size:var(--step--1);color:var(--muted);margin-top:2px}
+.facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.fact{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:12px 14px}
+.fact b{display:block;font:700 var(--step-1)/1.2 var(--mono)}
+.fact span{font-size:var(--step--1);color:var(--muted)}
+@media (max-width:520px){.facts{grid-template-columns:minmax(0,1fr)}.fact{display:flex;justify-content:space-between;align-items:baseline;gap:12px}}
+
+.goal{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;display:grid;gap:10px}
+.goal-head{display:flex;justify-content:space-between;gap:12px;align-items:baseline;flex-wrap:wrap}
+.goal-head h3{font:700 var(--step-0)/1.3 var(--body)}
+.goal-head span{font-size:var(--step--1);color:var(--muted)}
+.bar{height:12px;border-radius:999px;background:var(--paper-2);box-shadow:inset 0 0 0 1px var(--line);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:repeating-linear-gradient(-45deg,var(--coin) 0 8px,color-mix(in srgb,var(--coin) 75%,#fff) 8px 16px);border-radius:inherit;min-width:6px;transition:width .8s ease}
+.goal-foot{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:var(--step--1)}
+.goal-foot b{font-family:var(--mono)}
+
+/* ---------- the bowl (donation card) ---------- */
+.card{background:var(--paper);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}
+.bowl{padding:20px 20px 22px;display:grid;gap:16px}
+.bowl-head{display:flex;gap:12px;align-items:center}
+.bowl-head svg{width:56px;height:40px;flex:none;overflow:visible}
+.bowl-head h2{font:400 var(--step-2)/1.1 var(--display)}
+.bowl-head p{font-size:var(--step--1);color:var(--muted)}
+.coin-drop{animation:drop 1.1s cubic-bezier(.5,0,.7,1) both}
+@keyframes drop{0%{transform:translateY(-34px);opacity:0}25%{opacity:1}80%{transform:translateY(0)}90%{transform:translateY(-3px)}100%{transform:translateY(0)}}
+.step-label{font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.chips{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.chip{position:relative;text-align:left;cursor:pointer;background:var(--paper);border:1.5px solid var(--line);border-radius:var(--radius);padding:9px 10px 8px;line-height:1.2;transition:border-color .15s,background-color .15s}
+.chip:hover{border-color:var(--kraft-deep)}
+.chip b{display:block;font:700 1rem/1.2 var(--mono)}
+.chip span{display:block;font-size:.75rem;color:var(--muted);margin-top:3px}
+.chip[aria-checked="true"]{border-color:var(--stamp);background:var(--stamp-soft)}
+.chip[aria-checked="true"] span{color:var(--ink)}
+.field{display:grid;gap:6px}
+.field label{font-size:var(--step--1);font-weight:600}
+.field small{font-size:.75rem;color:var(--muted)}
+.input{width:100%;min-width:0;background:var(--paper);border:1.5px solid var(--line);border-radius:var(--radius);padding:10px 12px;font-size:var(--step-0)}
+.input:focus{border-color:var(--ink);outline:none}
+.input-money{position:relative}
+.input-money .input{padding-right:34px;font-family:var(--mono);font-weight:700}
+.input-money span{position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--muted);font-family:var(--mono)}
+.row2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}
+@media (max-width:380px){.row2{grid-template-columns:minmax(0,1fr)}}
+
+.qr{margin:0;display:grid;justify-items:center;gap:8px;padding-top:4px}
+.qr-frame{position:relative;width:min(232px,100%);aspect-ratio:1;max-width:100%;background:#fff;border-radius:12px;padding:10px;box-shadow:inset 0 0 0 1px var(--line)}
+.qr-frame img,.qr-frame canvas{display:block;width:100%;height:100%;image-rendering:pixelated}
+.qr-frame .corner{position:absolute;width:22px;height:22px;border:3px solid var(--stamp)}
+.qr-frame .c1{top:-5px;left:-5px;border-right:0;border-bottom:0;border-radius:10px 0 0 0}
+.qr-frame .c2{top:-5px;right:-5px;border-left:0;border-bottom:0;border-radius:0 10px 0 0}
+.qr-frame .c3{bottom:-5px;left:-5px;border-right:0;border-top:0;border-radius:0 0 0 10px}
+.qr-frame .c4{bottom:-5px;right:-5px;border-left:0;border-top:0;border-radius:0 0 10px 0}
+.qr-wait{position:absolute;inset:10px;display:grid;place-items:center;text-align:center;font-size:var(--step--1);color:#555;background:#fff}
+.demo-stamp{position:absolute;right:-14px;top:14px;transform:rotate(12deg);border:2.5px solid var(--stamp);color:var(--stamp);background:color-mix(in srgb,var(--paper) 85%,transparent);font:800 .75rem/1 var(--body);letter-spacing:.12em;padding:6px 8px;border-radius:6px;text-transform:uppercase}
+.qr figcaption{font-size:var(--step--1);color:var(--muted);text-align:center}
+.qr figcaption b{color:var(--ink);font-family:var(--mono)}
+
+.receipt{margin:0;border-top:2px dashed var(--line);padding-top:12px;display:grid;gap:2px}
+.receipt div{display:grid;grid-template-columns:96px minmax(0,1fr) auto;gap:8px;align-items:center;min-height:34px}
+.receipt dt{font-size:var(--step--1);color:var(--muted)}
+.receipt dd{margin:0;font:700 .9375rem/1.3 var(--mono);overflow-wrap:anywhere}
+.receipt dd.plain{font-family:var(--body);font-weight:600}
+.copy{border:0;background:var(--paper-2);border-radius:8px;padding:5px 9px;font-size:.75rem;font-weight:700;cursor:pointer;color:var(--ink)}
+.copy:hover{background:var(--line)}
+.copy.ok{background:var(--good);color:var(--paper)}
+.bowl .btn-stamp{width:100%;padding:14px 18px;font-size:var(--step-0)}
+.howto{font-size:.8125rem;color:var(--muted);display:grid;gap:4px;padding-left:18px;margin:0}
+
+/* ---------- sections ---------- */
+.sec-head{display:grid;gap:6px;margin-bottom:20px}
+.sec-head h2{font:400 var(--step-3)/1.1 var(--display)}
+.sec-head p{color:var(--muted);max-width:60ch}
+
+/* petition */
+.petition{background:var(--paper);border:1px solid var(--line);border-radius:4px;box-shadow:var(--shadow);padding:clamp(22px,4vw,44px);position:relative;max-width:720px}
+.petition::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(transparent 0 31px,color-mix(in srgb,var(--line) 55%,transparent) 31px 32px);background-position:0 12px;pointer-events:none;opacity:.6;border-radius:inherit}
+.petition>*{position:relative}
+.motto{text-align:center;display:grid;gap:2px;font-size:var(--step--1)}
+.motto b{font-weight:700;letter-spacing:.02em}
+.motto u{text-underline-offset:4px}
+.petition h3{text-align:center;font:800 var(--step-2)/1.2 var(--body);letter-spacing:.06em;margin-top:22px}
+.petition .re{text-align:center;font-style:italic;font-size:var(--step--1);color:var(--muted);margin-top:4px}
+.petition .body{display:grid;gap:10px;margin-top:22px;line-height:2}
+.petition .fill{font:400 1.2em/1 var(--display);color:var(--pen);padding:0 .15em;border-bottom:1.5px dotted var(--muted)}
+.petition .sig{display:flex;justify-content:flex-end;margin-top:24px}
+.petition .sig div{text-align:center;display:grid;gap:2px;font-size:var(--step--1)}
+.petition .sig .name{font:400 1.6rem/1.2 var(--display);color:var(--pen);margin-top:6px}
+.petition .sig i{font-style:italic;color:var(--muted)}
+
+/* price list */
+.menu{list-style:none;margin:0;padding:0;display:grid;max-width:720px;background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.menu li{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:14px;align-items:center;padding:14px 16px;border-top:1px solid var(--line)}
+.menu li:first-child{border-top:0}
+.menu .what b{display:block;font-weight:700}
+.menu .what span{display:block;font-size:var(--step--1);color:var(--muted)}
+.menu .price{font:700 var(--step-0)/1 var(--mono);white-space:nowrap}
+.menu .price small{display:block;font:500 .7rem/1.4 var(--body);color:var(--muted);text-align:right}
+.menu li.on{background:var(--stamp-soft)}
+@media (max-width:520px){.menu li{grid-template-columns:minmax(0,1fr) auto}.menu .btn{grid-column:1 / -1;justify-self:start}}
+
+/* where the money goes */
+.alloc{display:grid;gap:14px;max-width:720px}
+.alloc-row{display:grid;grid-template-columns:minmax(0,180px) minmax(0,1fr) 48px;gap:14px;align-items:center}
+.alloc-row span{font-size:var(--step--1);font-weight:600}
+.alloc-row .track{height:22px;background:var(--paper);border-radius:6px;box-shadow:inset 0 0 0 1px var(--line);overflow:hidden}
+.alloc-row .track i{display:block;height:100%;background:var(--kraft);border-radius:6px 0 0 6px}
+.alloc-row:nth-child(2) .track i{background:var(--kraft-deep)}
+.alloc-row:nth-child(3) .track i{background:var(--tin)}
+.alloc-row:nth-child(4) .track i{background:var(--tin-deep)}
+.alloc-row:nth-child(5) .track i{background:var(--stamp)}
+.alloc-row b{font:700 var(--step--1)/1 var(--mono);text-align:right}
+.alloc-note{font-size:var(--step--1);color:var(--muted);margin-top:14px}
+@media (max-width:520px){.alloc-row{grid-template-columns:minmax(0,1fr) 44px}.alloc-row .track{grid-column:1 / -1;grid-row:2}}
+
+/* honour roll */
+.roll{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;max-width:720px}
+.tier{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:16px;display:grid;gap:6px;align-content:start}
+.tier .medal{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font:800 .8rem/1 var(--mono);color:var(--kraft-ink)}
+.tier h3{font:700 var(--step-0)/1.3 var(--body)}
+.tier .min{font:500 var(--step--1)/1.3 var(--mono);color:var(--muted)}
+.tier ul{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:6px;font-size:var(--step--1)}
+.tier li{display:flex;justify-content:space-between;gap:8px;border-top:1px dashed var(--line);padding-top:6px}
+.tier li b{font-family:var(--mono)}
+.tier .empty{color:var(--muted);font-style:italic}
+@media (max-width:640px){.roll{grid-template-columns:minmax(0,1fr)}}
+
+/* testimonials */
+.quotes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;max-width:720px;margin:0}
+.quote{margin:0;background:var(--paper-2);border-radius:var(--radius);padding:18px;display:grid;gap:10px;align-content:space-between}
+.quote blockquote{margin:0;font:400 var(--step-1)/1.35 var(--display)}
+.quote figcaption{font-size:var(--step--1);color:var(--muted)}
+@media (max-width:640px){.quotes{grid-template-columns:minmax(0,1fr)}}
+
+/* faq */
+.faq{display:grid;gap:8px;max-width:720px}
+.faq details{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:0 16px}
+.faq summary{cursor:pointer;font-weight:700;padding:14px 0;list-style:none;display:flex;justify-content:space-between;gap:12px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font:700 1.2rem/1 var(--mono);color:var(--muted)}
+.faq details[open] summary::after{content:"–"}
+.faq details p{padding:0 0 16px;color:var(--muted);max-width:62ch}
+
+/* share */
+.share{max-width:720px;background:var(--kraft);color:var(--kraft-ink);border-radius:16px;padding:24px;display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between}
+.share h2{font:400 var(--step-2)/1.15 var(--display)}
+.share p{font-size:var(--step--1);margin-top:4px;max-width:44ch}
+.share .acts{display:flex;gap:8px;flex-wrap:wrap}
+.share .btn-ghost{color:var(--kraft-ink);box-shadow:inset 0 0 0 1.5px var(--kraft-ink)}
+.share .btn-dark{background:var(--kraft-ink);color:var(--kraft)}
+
+footer{border-top:1px solid var(--line);background:var(--paper)}
+footer div{max-width:1180px;margin:0 auto;padding-block:24px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between;font-size:var(--step--1);color:var(--muted)}
+footer b{font:400 1.1rem/1 var(--display);color:var(--ink)}
+
+/* toast */
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);opacity:0;background:var(--ink);color:var(--paper);padding:10px 16px;border-radius:999px;font-size:var(--step--1);font-weight:600;transition:all .25s ease;pointer-events:none;z-index:30;max-width:calc(100% - 32px)}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* thank-you dialog */
+dialog{border:0;padding:0;background:transparent;color:var(--ink);max-width:min(560px,calc(100% - 32px));width:100%}
+dialog::backdrop{background:rgba(20,15,8,.6)}
+.thanks{background:var(--paper);border-radius:18px;overflow:hidden;box-shadow:var(--shadow)}
+.thanks-top{position:relative;height:130px;background:var(--kraft);overflow:hidden;display:grid;place-items:end center}
+.thanks-top svg.bowl-big{width:150px;height:96px;margin-bottom:-6px;position:relative;z-index:2}
+.rain{position:absolute;inset:0}
+.rain i{position:absolute;top:-30px;width:18px;height:18px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#fff3c4,var(--coin) 55%,#a97d16);box-shadow:inset 0 0 0 2px rgba(120,80,0,.35);animation:rain 1.4s cubic-bezier(.55,0,.8,.6) forwards}
+@keyframes rain{to{transform:translateY(150px) rotate(240deg)}}
+.cert{margin:18px;border:2px solid var(--kraft-deep);outline:1px solid var(--kraft-deep);outline-offset:4px;border-radius:6px;padding:22px 20px;text-align:center;display:grid;gap:8px;position:relative}
+.cert .eyebrow{font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.cert h2{font:400 2.3rem/1 var(--display);color:var(--stamp)}
+.cert .who{font:400 1.7rem/1.2 var(--display)}
+.cert p{font-size:var(--step--1)}
+.cert .amt{font:700 var(--step-1)/1.2 var(--mono)}
+.cert .foot{display:flex;justify-content:space-between;align-items:end;margin-top:10px;text-align:left;gap:12px}
+.cert .foot small{color:var(--muted);font-size:.75rem}
+.seal{width:88px;height:88px;border-radius:50%;border:3px solid var(--stamp);color:var(--stamp);display:grid;place-items:center;text-align:center;font:800 .625rem/1.2 var(--body);letter-spacing:.06em;text-transform:uppercase;transform:rotate(-14deg);box-shadow:inset 0 0 0 4px var(--paper),inset 0 0 0 5.5px var(--stamp);flex:none;padding:10px;opacity:.9}
+.thanks-acts{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;padding:0 18px 20px}
+.thanks-note{text-align:center;font-size:.8125rem;color:var(--muted);padding:0 18px 12px}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+}
+</style>
+<!-- PAGE:HEAD-END -->
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="#top" aria-label="Ăn Xin Online, về đầu trang">
+      <svg viewBox="0 0 68 48" aria-hidden="true"><ellipse cx="34" cy="14" rx="30" ry="6" fill="var(--tin-deep)"/><path d="M4 14c2 18 14 30 30 30s28-12 30-30c-6 4-18 6-30 6S10 18 4 14z" fill="var(--tin)"/><path d="M14 30c5 6 12 9 20 9" stroke="var(--paper)" stroke-width="2.5" fill="none" stroke-linecap="round" opacity=".7"/><circle cx="26" cy="12" r="5" fill="var(--coin)"/><circle cx="40" cy="11" r="4" fill="var(--coin)"/></svg>
+      Ăn Xin Online
+    </a>
+    <nav class="nav" aria-label="Mục lục">
+      <a href="#don">Hoàn cảnh</a>
+      <a href="#bang-gia">Bảng giá</a>
+      <a href="#tien-di-dau">Tiền đi đâu</a>
+      <a href="#bang-vang">Bảng vàng</a>
+      <a href="#hoi-dap">Hỏi đáp</a>
+    </nav>
+    <a class="btn btn-stamp btn-sm" href="#bat">Quét QR</a>
+  </div>
+</header>
+
+<div class="demo" id="demo-banner" hidden>
+  <p><strong>Bản mẫu.</strong> Số tài khoản trên trang chưa phải của chủ bát nên mã QR chưa nhận được tiền. Chủ bát mở <code>index.html</code>, sửa khối <code>CONFIG</code> ở đầu phần script là chạy thật.</p>
+</div>
+
+<main class="layout" id="top">
+
+  <!-- ===== HERO ===== -->
+  <section class="hero" aria-labelledby="sign-title">
+    <div class="sign-wrap">
+      <span class="tape l" aria-hidden="true"></span><span class="tape r" aria-hidden="true"></span>
+      <div class="sign">
+        <p class="kicker">XIN LÒNG HẢO TÂM</p>
+        <h1 id="sign-title">Cho em xin <span class="hl" id="sign-amount">10 nghìn</span><span class="big" id="sign-what">ăn mì tôm</span></h1>
+        <div class="lines">
+          <p>Ví em mỏng. Bụng em đói.</p>
+          <p>Lương về mùng 5, <s>hết</s> bay màu mùng 7.</p>
+        </div>
+        <p class="arrow">
+          <svg viewBox="0 0 80 32" aria-hidden="true"><path d="M3 22c14-10 32-14 62-8" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M56 5l11 9-12 7" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span><span class="on-wide">Quét mã QR bên cạnh.</span><span class="on-narrow">Quét mã QR bên dưới.</span> Có tâm thì cho, không thì share.</span>
+        </p>
+      </div>
+    </div>
+
+    <div class="profile">
+      <div class="avatar" id="avatar" aria-hidden="true">N</div>
+      <div>
+        <h2 id="owner-name">Nguyễn Văn Nghèo</h2>
+        <p class="handle" id="owner-handle">@chubat</p>
+        <p class="bio" id="owner-bio">Sinh viên năm cuối kiêm thợ code dạo. Đang sống nhờ mì tôm và lòng tốt người lạ.</p>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ===== THE BOWL ===== -->
+  <aside class="bowl card" id="bat" aria-labelledby="bowl-title">
+    <div class="bowl-head">
+      <svg viewBox="0 0 68 48" aria-hidden="true">
+        <g id="bowl-coins"><circle cx="27" cy="11" r="5.5" fill="var(--coin)"/><circle cx="41" cy="10" r="4.5" fill="var(--coin)"/></g>
+        <ellipse cx="34" cy="14" rx="30" ry="6" fill="var(--tin-deep)"/>
+        <path d="M4 14c2 18 14 30 30 30s28-12 30-30c-6 4-18 6-30 6S10 18 4 14z" fill="var(--tin)"/>
+        <path d="M14 30c5 6 12 9 20 9" stroke="var(--paper)" stroke-width="2.5" fill="none" stroke-linecap="round" opacity=".7"/>
+        <path d="M50 22l3 5" stroke="var(--tin-deep)" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <div>
+        <h2 id="bowl-title">Bỏ vào bát</h2>
+        <p>Quét bằng app ngân hàng nào cũng được</p>
+      </div>
+    </div>
+
+    <div class="field">
+      <span class="step-label" id="chips-label">Bao em món gì?</span>
+      <div class="chips" role="radiogroup" aria-labelledby="chips-label" id="chips"></div>
+    </div>
+
+    <div class="row2">
+      <div class="field">
+        <label for="amount-input">Hoặc số khác</label>
+        <div class="input-money"><input class="input num" id="amount-input" inputmode="numeric" autocomplete="off" placeholder="vd 15.000"><span aria-hidden="true">đ</span></div>
+      </div>
+      <div class="field">
+        <label for="donor-name">Tên bạn</label>
+        <input class="input" id="donor-name" maxlength="30" autocomplete="nickname" placeholder="vd: Anh Tuấn">
+      </div>
+    </div>
+
+    <figure class="qr">
+      <div class="qr-frame">
+        <span class="corner c1"></span><span class="corner c2"></span><span class="corner c3"></span><span class="corner c4"></span>
+        <img id="qr-img" alt="Mã VietQR chuyển khoản cho chủ bát" hidden>
+        <div class="qr-wait" id="qr-wait">Đang vẽ mã QR…</div>
+        <span class="demo-stamp" id="demo-stamp" hidden>Mẫu</span>
+      </div>
+      <figcaption id="qr-caption">Quét để chuyển <b>10.000đ</b> · ≈ 1 gói mì</figcaption>
+    </figure>
+
+    <dl class="receipt">
+      <div><dt>Ngân hàng</dt><dd class="plain" id="r-bank">MB Bank</dd><span></span></div>
+      <div><dt>Số tài khoản</dt><dd id="r-acc">0000000000</dd><button class="copy" type="button" data-copy="acc">Chép</button></div>
+      <div><dt>Chủ tài khoản</dt><dd id="r-name">NGUYEN VAN NGHEO</dd><span></span></div>
+      <div><dt>Số tiền</dt><dd class="num" id="r-amount">10.000đ</dd><button class="copy" type="button" data-copy="amount">Chép</button></div>
+      <div><dt>Nội dung</dt><dd id="r-note">MTQ ung ho mi tom</dd><button class="copy" type="button" data-copy="note">Chép</button></div>
+    </dl>
+
+    <button class="btn btn-stamp" type="button" id="done-btn">Em đã bỏ vào bát rồi</button>
+    <ol class="howto">
+      <li>Mở app ngân hàng, chọn Quét QR.</li>
+      <li>Kiểm tra tên người nhận khớp với “Chủ tài khoản” ở trên.</li>
+      <li>Bấm chuyển, rồi quay lại nhận bằng khen.</li>
+    </ol>
+  </aside>
+
+  <!-- ===== THE REST ===== -->
+  <div class="rest">
+
+    <div class="stats">
+      <div class="facts">
+        <div class="fact"><b class="num" id="fact-streak">27 ngày</b><span>ăn mì tôm liên tiếp</span></div>
+        <div class="fact"><b class="num" id="fact-wallet">12.000đ</b><span>số dư trong ví</span></div>
+        <div class="fact"><b class="num" id="fact-fridge">½ quả chanh</b><span>còn trong tủ lạnh</span></div>
+      </div>
+
+      <div class="goal" aria-labelledby="goal-title">
+        <div class="goal-head">
+          <h3 id="goal-title">Mục tiêu: Đóng tiền trọ tháng 12</h3>
+          <span id="goal-noodles">≈ 200 gói mì</span>
+        </div>
+        <div class="bar" role="progressbar" aria-labelledby="goal-title" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="goal-bar"><i id="goal-fill"></i></div>
+        <div class="goal-foot">
+          <span>Đã xin được <b class="num" id="goal-raised">0đ</b> / <b class="num" id="goal-target">2.000.000đ</b></span>
+          <span id="goal-note">Chưa ai mở hàng. Bạn mở hàng đi!</span>
+        </div>
+      </div>
+    </div>
+
+    <section id="don" aria-labelledby="don-title">
+      <div class="sec-head">
+        <h2 id="don-title">Hoàn cảnh</h2>
+        <p>Đơn viết tay, nộp trực tuyến, không qua tổ trưởng dân phố.</p>
+      </div>
+      <article class="petition">
+        <div class="motto">
+          <b>CỘNG HOÀ XÃ HỘI CHỦ NGHĨA VIỆT NAM</b>
+          <u>Độc lập – Tự do – Hạnh phúc</u>
+        </div>
+        <h3>ĐƠN XIN ỦNG HỘ</h3>
+        <p class="re">V/v: hỗ trợ khẩn cấp tiền mì tôm cuối tháng</p>
+        <div class="body">
+          <p><b>Kính gửi:</b> Các anh chị em mạnh thường quân trên khắp không gian mạng.</p>
+          <p>Tôi tên là: <span class="fill" data-bind="ownerName">Nguyễn Văn Nghèo</span></p>
+          <p>Nghề nghiệp: <span class="fill" data-bind="job">Sinh viên năm cuối kiêm thợ code dạo</span></p>
+          <p>Hoàn cảnh: Lương về mùng 5, hết vào mùng 7. Hiện ví còn <span class="fill num" data-bind="wallet">12.000đ</span>, tủ lạnh còn nửa quả chanh và một chai nước mắm đã mở nắp.</p>
+          <p>Nay tôi làm đơn này kính mong quý vị rủ lòng thương, chuyển khoản theo khả năng. Ít thì 5 nghìn, nhiều thì không giới hạn.</p>
+          <p>Tôi xin cam đoan dùng tiền đúng mục đích (ăn), không nạp game, không mua trà sữa size L. Nếu sai, tôi xin chịu hoàn toàn trách nhiệm trước lương tâm.</p>
+        </div>
+        <div class="sig">
+          <div>
+            <i id="petition-date"><span data-bind="city">Hà Nội</span>, ngày … tháng … năm …</i>
+            <b>Người làm đơn</b>
+            <i>(ký, ghi rõ họ tên)</i>
+            <span class="name" data-bind="ownerName">Nguyễn Văn Nghèo</span>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section id="bang-gia" aria-labelledby="gia-title">
+      <div class="sec-head">
+        <h2 id="gia-title">Bảng giá lòng tốt</h2>
+        <p>Giá vỉa hè, chưa gồm VAT, đã gồm sự biết ơn. Bấm “Bao món này” để mã QR tự điền số tiền.</p>
+      </div>
+      <ul class="menu" id="menu"></ul>
+    </section>
+
+    <section id="tien-di-dau" aria-labelledby="tien-title">
+      <div class="sec-head">
+        <h2 id="tien-title">Tiền của bạn đi đâu</h2>
+        <p>Minh bạch như nước trà đá. Cứ 100 đồng nhận được thì chia như sau.</p>
+      </div>
+      <div class="alloc" id="alloc"></div>
+      <p class="alloc-note">Số liệu do chủ bát tự khai, chưa qua kiểm toán.</p>
+    </section>
+
+    <section id="bang-vang" aria-labelledby="vang-title">
+      <div class="sec-head">
+        <h2 id="vang-title">Bảng vàng ân nhân</h2>
+        <p id="roll-intro">Chuyển xong, nhắn chủ bát để được khắc tên. Khắc tay, nên hơi chậm.</p>
+      </div>
+      <div class="roll" id="roll"></div>
+    </section>
+
+    <section aria-labelledby="quote-title">
+      <div class="sec-head">
+        <h2 id="quote-title">Người quen nói gì</h2>
+        <p>Trích nguyên văn, không cắt ghép, có hơi phóng đại.</p>
+      </div>
+      <div class="quotes">
+        <figure class="quote"><blockquote>“Nó xin tiền giỏi hơn học. Cho nó ít đi, đỡ gọi điện về nhà.”</blockquote><figcaption>Mẹ của chủ bát</figcaption></figure>
+        <figure class="quote"><blockquote>“Tháng nào cũng hứa mùng 10 đóng tiền trọ. Năm nay chưa tháng nào là mùng 10.”</blockquote><figcaption>Cô chủ nhà trọ</figcaption></figure>
+        <figure class="quote"><blockquote>“Từ ngày nó làm trang này, nó thôi vay tôi. Giờ nó vay cả nước.”</blockquote><figcaption>Bạn thân, chủ nợ lâu năm</figcaption></figure>
+      </div>
+    </section>
+
+    <section id="hoi-dap" aria-labelledby="faq-title">
+      <div class="sec-head">
+        <h2 id="faq-title">Hỏi nhanh đáp gọn</h2>
+      </div>
+      <div class="faq">
+        <details open><summary>Có phải lừa đảo không?</summary><p>Không. Đây là xin thẳng mặt, công khai, có ghi tên. Khi quét QR, app ngân hàng sẽ hiện tên chủ tài khoản. Tên đó khớp với tên ở mục “Chủ tài khoản” thì hãy chuyển, không khớp thì đừng.</p></details>
+        <details><summary>Chuyển rồi tôi được gì?</summary><p>Một tấm bằng khen điện tử để chụp màn hình khoe, một suất trên Bảng vàng, và lời cảm ơn rất thật lòng từ một cái bụng đang đói.</p></details>
+        <details><summary>Không có tiền thì giúp kiểu gì?</summary><p>Chia sẻ trang này cho người có tiền. Một lượt share của bạn có thể bằng cả gói mì của người khác.</p></details>
+        <details><summary>Lỡ chuyển nhầm số to quá thì sao?</summary><p>Nhắn chủ bát, kèm ảnh giao dịch. Chủ bát sẽ ngồi im ba phút, khóc một chút, rồi hoàn lại.</p></details>
+        <details><summary>Có xuất hoá đơn VAT không?</summary><p>Chỉ xuất được hoá đơn cảm xúc. Mẫu số 01/TÌNHCẢM, ký hiệu MÌ/26.</p></details>
+        <details><summary>Trang này có tự biết tôi đã chuyển không?</summary><p>Không. Trang chỉ tạo mã QR, không đọc được tài khoản ngân hàng. Tiền đi thẳng từ app của bạn sang tài khoản chủ bát qua Napas 247.</p></details>
+      </div>
+    </section>
+
+    <section class="share" aria-labelledby="share-title">
+      <div>
+        <h2 id="share-title">Không có tiền? Share cũng là cho.</h2>
+        <p>Gửi link cho đứa bạn vừa nhận thưởng Tết, hoặc thả lên nhóm lớp.</p>
+      </div>
+      <div class="acts">
+        <button class="btn btn-dark" type="button" id="copy-link">Sao chép link</button>
+        <a class="btn btn-ghost" id="fb-share" href="https://www.facebook.com/sharer/sharer.php" target="_blank" rel="noopener">Chia sẻ Facebook</a>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div>
+    <span><b>Ăn Xin Online</b> · làm bằng mì tôm và chút liêm sỉ còn sót lại</span>
+    <span>Mã QR theo chuẩn VietQR · Napas 247. Luôn kiểm tra tên người nhận trước khi chuyển.</span>
+  </div>
+</footer>
+
+<dialog id="thanks" aria-labelledby="cert-title">
+  <div class="thanks">
+    <div class="thanks-top">
+      <div class="rain" id="rain" aria-hidden="true"></div>
+      <svg class="bowl-big" viewBox="0 0 68 48" aria-hidden="true"><ellipse cx="34" cy="14" rx="30" ry="6" fill="var(--tin-deep)"/><path d="M4 14c2 18 14 30 30 30s28-12 30-30c-6 4-18 6-30 6S10 18 4 14z" fill="var(--tin)"/><path d="M14 30c5 6 12 9 20 9" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round" opacity=".6"/></svg>
+    </div>
+    <div class="cert">
+      <span class="eyebrow">Chủ bát trân trọng trao tặng</span>
+      <h2 id="cert-title">Bằng khen</h2>
+      <span class="who" id="cert-who">Mạnh Thường Quân Giấu Tên</span>
+      <p>Đã có hành động cao đẹp: bao chủ bát <b id="cert-item">một gói mì tôm</b></p>
+      <span class="amt num" id="cert-amt">10.000đ ≈ 1 gói mì</span>
+      <div class="foot">
+        <div>
+          <small id="cert-date">Hà Nội, ngày …</small><br>
+          <span style="font:400 1.4rem/1.2 var(--display)" id="cert-sign">Nguyễn Văn Nghèo</span>
+        </div>
+        <div class="seal" aria-hidden="true">Đã nhận<br>tấm lòng</div>
+      </div>
+    </div>
+    <p class="thanks-note">Chụp màn hình bằng khen để khoe. Muốn lên Bảng vàng thì nhắn chủ bát kèm ảnh giao dịch.</p>
+    <div class="thanks-acts">
+      <a class="btn btn-ghost" id="contact-btn" href="#" target="_blank" rel="noopener" hidden>Nhắn chủ bát</a>
+      <button class="btn btn-stamp" type="button" id="close-thanks">Đóng</button>
+    </div>
+  </div>
+</dialog>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* =====================================================================
+   CONFIG — CHỦ BÁT SỬA Ở ĐÂY
+   ---------------------------------------------------------------------
+   bank:          mã ngân hàng, chọn trong danh sách BANKS bên dưới
+                  (vd "VCB", "MB", "TCB", "ACB", "BIDV", "VIETINBANK", "TPBANK"…)
+   accountNumber: số tài khoản nhận tiền
+   accountName:   tên chủ tài khoản, VIẾT HOA KHÔNG DẤU, đúng như trên app
+   Khi accountNumber vẫn là "0000000000", trang hiện chế độ BẢN MẪU.
+   ===================================================================== */
+const CONFIG = {
+  bank: "MB",
+  accountNumber: "0000000000",
+  accountName: "NGUYEN VAN NGHEO",
+
+  ownerName: "Nguyễn Văn Nghèo",
+  handle: "@chubat",
+  bio: "Sinh viên năm cuối kiêm thợ code dạo. Đang sống nhờ mì tôm và lòng tốt người lạ.",
+  job: "Sinh viên năm cuối kiêm thợ code dạo",
+  city: "Hà Nội",
+  avatarUrl: "",            // link ảnh đại diện (để trống thì hiện chữ cái đầu)
+  wallet: 12000,            // số dư "khai báo" trong ví
+  noodleStreak: 27,         // số ngày ăn mì liên tiếp
+  fridge: "½ quả chanh",
+
+  goal: { title: "Đóng tiền trọ tháng 12", target: 2000000, raised: 0 },  // raised: chủ bát tự cập nhật
+
+  contactUrl: "",           // link Facebook/Zalo/Messenger để người cho nhắn tin
+  shareUrl: "",             // link công khai của trang (để trống thì lấy link hiện tại)
+  defaultItem: "mi",        // món chọn sẵn khi mở trang
+
+  // Bảng vàng: chủ bát tự thêm người đã chuyển. Ví dụ:
+  // { name: "Anh Tuấn", amount: 50000 },
+  donors: []
+};
+
+/* Mã BIN theo Napas/VietQR */
+const BANKS = {
+  VCB:{bin:"970436",name:"Vietcombank"}, VIETINBANK:{bin:"970415",name:"VietinBank"}, BIDV:{bin:"970418",name:"BIDV"},
+  AGRIBANK:{bin:"970405",name:"Agribank"}, TCB:{bin:"970407",name:"Techcombank"}, MB:{bin:"970422",name:"MB Bank"},
+  ACB:{bin:"970416",name:"ACB"}, VPBANK:{bin:"970432",name:"VPBank"}, TPBANK:{bin:"970423",name:"TPBank"},
+  SACOMBANK:{bin:"970403",name:"Sacombank"}, HDBANK:{bin:"970437",name:"HDBank"}, VIB:{bin:"970441",name:"VIB"},
+  SHB:{bin:"970443",name:"SHB"}, EXIMBANK:{bin:"970431",name:"Eximbank"}, MSB:{bin:"970426",name:"MSB"},
+  OCB:{bin:"970448",name:"OCB"}, SEABANK:{bin:"970440",name:"SeABank"}, LPBANK:{bin:"970449",name:"LPBank"},
+  NAMABANK:{bin:"970428",name:"Nam A Bank"}, BACABANK:{bin:"970409",name:"Bac A Bank"}, BVBANK:{bin:"970454",name:"BVBank"},
+  ABBANK:{bin:"970425",name:"ABBANK"}, KIENLONG:{bin:"970452",name:"KienlongBank"}, PVCOMBANK:{bin:"970412",name:"PVcomBank"},
+  VIETBANK:{bin:"970433",name:"VietBank"}, NCB:{bin:"970419",name:"NCB"}, SCB:{bin:"970429",name:"SCB"},
+  BAOVIET:{bin:"970438",name:"BaoViet Bank"}, VIETABANK:{bin:"970427",name:"VietABank"}, PGBANK:{bin:"970430",name:"PG Bank"},
+  SAIGONBANK:{bin:"970400",name:"SaigonBank"}, SHINHAN:{bin:"970424",name:"Shinhan Bank"}, MBV:{bin:"970414",name:"MBV"},
+  VIKKI:{bin:"970406",name:"Vikki Bank"}, CAKE:{bin:"546034",name:"Cake by VPBank"}, UBANK:{bin:"546035",name:"Ubank by VPBank"},
+  TIMO:{bin:"963388",name:"Timo"}, LIOBANK:{bin:"963369",name:"Liobank"}, KBANK:{bin:"668888",name:"Kasikornbank"}
+};
+
+/* Thực đơn: id, số tiền (0 = tùy tâm), tên ngắn (in vào nội dung CK), tên hiển thị, mô tả */
+const MENU = [
+  {id:"trada", amount:5000,   code:"tra da",    chip:"Trà đá",     sign:"uống trà đá",    name:"Cốc trà đá vỉa hè",          gift:"một cốc trà đá",       note:"Giải nhiệt, giải sầu, giải luôn cơn khát tiền."},
+  {id:"mi",    amount:10000,  code:"mi tom",    chip:"Mì tôm",     sign:"ăn mì tôm",      name:"Gói mì tôm, thêm quả trứng", gift:"một gói mì tôm",       note:"Đơn vị tiền tệ chính thức của trang này."},
+  {id:"banhmi",amount:20000,  code:"banh mi",   chip:"Bánh mì",    sign:"ăn bánh mì",     name:"Ổ bánh mì pate",             gift:"một ổ bánh mì pate",   note:"Bữa sáng no tới trưa nếu ăn chậm."},
+  {id:"cafe",  amount:30000,  code:"ca phe",    chip:"Cà phê",     sign:"uống cà phê",    name:"Ly cà phê sữa đá",           gift:"một ly cà phê sữa đá", note:"Để tỉnh táo viết tiếp đơn xin.", menuOnly:true},
+  {id:"comtam",amount:50000,  code:"com tam",   chip:"Cơm tấm",    sign:"ăn cơm tấm",     name:"Đĩa cơm tấm sườn bì chả",    gift:"một đĩa cơm tấm",      note:"Bữa ra hồn đầu tiên trong tuần."},
+  {id:"ngay",  amount:100000, code:"bao 1 ngay",chip:"Bao 1 ngày", sign:"sống qua ngày",  name:"Bao trọn một ngày",          gift:"trọn một ngày no",     note:"Sáng bánh mì, trưa cơm tấm, tối mì tôm, kèm trà đá."},
+  {id:"dien",  amount:200000, code:"tien dien", chip:"Tiền điện",  sign:"đóng tiền điện", name:"Đóng hộ tiền điện",          gift:"tiền điện tháng này",  note:"Để quạt chạy, để điện thoại còn pin xin tiếp.", menuOnly:true},
+  {id:"tro",   amount:500000, code:"tien tro",  chip:"Tiền trọ",   sign:"đóng tiền trọ",  name:"Gánh một phần tiền trọ",     gift:"một phần tiền trọ",    note:"Cô chủ trọ sẽ cảm ơn bạn bằng ánh mắt.", menuOnly:true},
+  {id:"tam",   amount:0,      code:"",          chip:"Tùy tâm",    sign:"qua cơn đói",    name:"Tùy tâm",                    gift:"một phần lòng tốt tùy tâm", note:"Không điền sẵn số tiền, bạn tự nhập trong app."}
+];
+
+const ALLOC = [
+  ["Mì tôm và trứng", 40],
+  ["Tiền trọ", 25],
+  ["Trà đá vỉa hè", 15],
+  ["Trả nợ bạn thân", 15],
+  ["Quỹ mua iPhone (đời nào đó)", 5]
+];
+
+const TIERS = [
+  {key:"kc",  name:"Kim cương", min:500000, color:"var(--tin)"},
+  {key:"vang",name:"Vàng",      min:100000, color:"var(--coin)"},
+  {key:"bac", name:"Đồng hành", min:1,      color:"var(--kraft)"}
+];
+const NOODLE = 10000; // 1 gói mì (kèm trứng)
+
+/* ---------- helpers ---------- */
+const $ = s => document.querySelector(s);
+const money = n => Math.round(n).toLocaleString("vi-VN").replace(/,/g,".") + "đ";
+const noodles = n => {
+  const g = n / NOODLE;
+  if (g < 1) return "≈ " + (Math.round(g*10)/10).toString().replace(".", ",") + " gói mì";
+  return "≈ " + Math.round(g).toLocaleString("vi-VN").replace(/,/g,".") + " gói mì";
+};
+const shortVN = n => n >= 1000000 && n % 100000 === 0 ? (n/1000000).toString().replace(".", ",") + " triệu" : n % 1000 === 0 ? (n/1000).toLocaleString("vi-VN").replace(/,/g,".") + " nghìn" : money(n);
+const ascii = s => (s||"").normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/đ/g,"d").replace(/Đ/g,"D").replace(/[^A-Za-z0-9 ]+/g," ").replace(/\s+/g," ").trim();
+function setText(sel, t){ const el = typeof sel === "string" ? $(sel) : sel; if (el) el.textContent = t; }
+
+/* ---------- VietQR (EMVCo, Napas 247) ---------- */
+function tlv(id, v){ v = String(v); return id + String(v.length).padStart(2,"0") + v; }
+function crc16(s){ let c = 0xFFFF; for (let i=0;i<s.length;i++){ c ^= s.charCodeAt(i) << 8; for (let j=0;j<8;j++){ c = (c & 0x8000) ? ((c<<1) ^ 0x1021) : (c<<1); c &= 0xFFFF; } } return c.toString(16).toUpperCase().padStart(4,"0"); }
+function vietqr({bin, account, amount, purpose}){
+  const mai = tlv("00","A000000727") + tlv("01", tlv("00",bin) + tlv("01",account)) + tlv("02","QRIBFTTA");
+  let s = tlv("00","01") + tlv("01", amount ? "12" : "11") + tlv("38", mai) + tlv("53","704");
+  if (amount) s += tlv("54", String(amount));
+  s += tlv("58","VN");
+  if (purpose) s += tlv("62", tlv("08", purpose));
+  s += "6304";
+  return s + crc16(s);
+}
+
+/* ---------- QR library: cdnjs, falling back to jsDelivr then unpkg ---------- */
+const QR_SOURCES = [
+  "https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js",
+  "https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js",
+  "https://unpkg.com/qrcode-generator@1.4.4/qrcode.js"
+];
+function loadQrLib(){
+  return new Promise((resolve, reject) => {
+    if (window.qrcode) return resolve(window.qrcode);
+    const next = i => {
+      if (i >= QR_SOURCES.length) return reject(new Error("qr-lib"));
+      const s = document.createElement("script");
+      s.src = QR_SOURCES[i]; s.async = true;
+      s.onload = () => window.qrcode ? resolve(window.qrcode) : next(i+1);
+      s.onerror = () => { s.remove(); next(i+1); };
+      document.head.appendChild(s);
+    };
+    next(0);
+  });
+}
+
+/* ---------- state ---------- */
+const bank = BANKS[String(CONFIG.bank).toUpperCase()] || BANKS.MB;
+const isDemo = !CONFIG.accountNumber || /^0+$/.test(CONFIG.accountNumber);
+const state = { itemId: MENU.some(m => m.id === CONFIG.defaultItem) ? CONFIG.defaultItem : "mi", custom: 0, donor: "" };
+
+/* custom amount (typed) wins over the picked item */
+function current(){
+  if (state.custom > 0) return { amount: state.custom, code: "", gift: "một phần lòng tốt", sign: "qua cơn đói", id: null };
+  const m = MENU.find(x => x.id === state.itemId) || MENU[1];
+  return { amount: m.amount, code: m.code, gift: m.gift, sign: m.sign, id: m.id };
+}
+function transferNote(){
+  const who = ascii(state.donor).slice(0, 20) || "MTQ";
+  const c = current();
+  return (who + " ung ho" + (c.code ? " " + c.code : "")).slice(0, 50);
+}
+
+/* ---------- render ---------- */
+let qrLib = null, qrTimer = 0;
+function renderQR(){
+  const c = current();
+  const payload = vietqr({ bin: bank.bin, account: CONFIG.accountNumber, amount: c.amount || 0, purpose: transferNote() });
+  if (!qrLib) return;
+  const qr = qrLib(0, "M"); qr.addData(payload); qr.make();
+  const n = qr.getModuleCount(), quiet = 2, scale = 8, size = (n + quiet*2) * scale;
+  const cv = document.createElement("canvas"); cv.width = cv.height = size;
+  const g = cv.getContext("2d"); g.fillStyle = "#fff"; g.fillRect(0,0,size,size); g.fillStyle = "#111";
+  for (let r=0;r<n;r++) for (let k=0;k<n;k++) if (qr.isDark(r,k)) g.fillRect((k+quiet)*scale,(r+quiet)*scale,scale,scale);
+  const img = $("#qr-img"); img.src = cv.toDataURL("image/png"); img.hidden = false; $("#qr-wait").hidden = true;
+  img.dataset.payload = payload;
+}
+function render(){
+  const c = current();
+  document.querySelectorAll(".chip").forEach(b => b.setAttribute("aria-checked", String(b.dataset.id === c.id)));
+  document.querySelectorAll(".menu li").forEach(li => li.classList.toggle("on", li.dataset.id === c.id));
+  const amt = c.amount ? money(c.amount) : "Tùy tâm";
+  $("#qr-caption").innerHTML = c.amount ? `Quét để chuyển <b>${money(c.amount)}</b> · ${noodles(c.amount)}` : "Quét rồi tự nhập số tiền trong app";
+  setText("#r-amount", amt);
+  setText("#r-note", transferNote());
+  setText("#sign-amount", c.amount ? shortVN(c.amount) : "chút lòng");
+  setText("#sign-what", c.sign);
+  clearTimeout(qrTimer); qrTimer = setTimeout(renderQR, 120);
+}
+
+function buildStatic(){
+  // profile
+  document.querySelectorAll('[data-bind="ownerName"]').forEach(el => el.textContent = CONFIG.ownerName);
+  document.querySelectorAll('[data-bind="job"]').forEach(el => el.textContent = CONFIG.job);
+  document.querySelectorAll('[data-bind="wallet"]').forEach(el => el.textContent = money(CONFIG.wallet));
+  setText("#owner-name", CONFIG.ownerName); setText("#owner-handle", CONFIG.handle); setText("#owner-bio", CONFIG.bio);
+  setText("#fact-streak", CONFIG.noodleStreak + " ngày"); setText("#fact-wallet", money(CONFIG.wallet)); setText("#fact-fridge", CONFIG.fridge);
+  const av = $("#avatar");
+  if (CONFIG.avatarUrl){ av.textContent = ""; const im = new Image(); im.alt = ""; im.src = CONFIG.avatarUrl; im.onerror = () => { av.textContent = initial(); }; av.appendChild(im); }
+  else av.textContent = initial();
+  function initial(){ const p = CONFIG.ownerName.trim().split(/\s+/); return (p[p.length-1]||"?").charAt(0).toUpperCase(); }
+
+  // dates
+  const d = new Date();
+  const dateVN = `${CONFIG.city}, ngày ${String(d.getDate()).padStart(2,"0")} tháng ${String(d.getMonth()+1).padStart(2,"0")} năm ${d.getFullYear()}`;
+  setText("#petition-date", dateVN); setText("#cert-date", dateVN); setText("#cert-sign", CONFIG.ownerName);
+
+  // goal
+  const G = CONFIG.goal, pct = Math.max(0, Math.min(100, G.target ? G.raised / G.target * 100 : 0));
+  setText("#goal-title", "Mục tiêu: " + G.title);
+  setText("#goal-raised", money(G.raised)); setText("#goal-target", money(G.target));
+  setText("#goal-noodles", noodles(G.target));
+  $("#goal-bar").setAttribute("aria-valuenow", String(Math.round(pct)));
+  requestAnimationFrame(() => { $("#goal-fill").style.width = pct + "%"; });
+  setText("#goal-note", G.raised <= 0 ? "Chưa ai mở hàng. Bạn mở hàng đi!" : pct >= 100 ? "Đủ rồi! Cảm ơn cả làng." : `Còn thiếu ${money(G.target - G.raised)} (${noodles(G.target - G.raised)})`);
+
+  // receipt
+  setText("#r-bank", bank.name); setText("#r-acc", CONFIG.accountNumber); setText("#r-name", ascii(CONFIG.accountName).toUpperCase());
+
+  // chips
+  const chips = $("#chips");
+  MENU.filter(m => !m.menuOnly).forEach(m => {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "chip"; b.dataset.id = m.id; b.setAttribute("role","radio"); b.id = "chip-" + m.id;
+    b.innerHTML = m.amount ? `<b class="num">${m.amount/1000}K</b><span>${m.chip}</span>` : `<b>Tùy</b><span>tự nhập trong app</span>`;
+    b.addEventListener("click", () => pick(m.id));
+    chips.appendChild(b);
+  });
+  chips.addEventListener("keydown", e => {
+    if (!["ArrowRight","ArrowLeft","ArrowDown","ArrowUp"].includes(e.key)) return;
+    const list = [...chips.querySelectorAll(".chip")], i = list.indexOf(document.activeElement);
+    if (i < 0) return; e.preventDefault();
+    const j = (i + (e.key === "ArrowRight" || e.key === "ArrowDown" ? 1 : -1) + list.length) % list.length;
+    list[j].focus(); pick(list[j].dataset.id);
+  });
+
+  // menu list
+  const menu = $("#menu");
+  MENU.filter(m => m.amount).forEach(m => {
+    const li = document.createElement("li"); li.dataset.id = m.id; li.dataset.amount = m.amount;
+    li.innerHTML = `<div class="what"><b></b><span></span></div><div class="price num">${money(m.amount)}<small>${noodles(m.amount)}</small></div><button class="btn btn-ghost btn-sm" type="button" id="menu-${m.id}">Bao món này</button>`;
+    li.querySelector("b").textContent = m.name; li.querySelector(".what span").textContent = m.note;
+    li.querySelector("button").addEventListener("click", () => {
+      pick(m.id);
+      const target = $("#bat"); target.scrollIntoView({behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start"});
+      toast("Đã điền " + money(m.amount) + " vào mã QR");
+    });
+    menu.appendChild(li);
+  });
+
+  // allocation bars (one scale: 0–100%)
+  const alloc = $("#alloc"), max = 100;
+  ALLOC.forEach(([label, v]) => {
+    const row = document.createElement("div"); row.className = "alloc-row";
+    row.innerHTML = `<span></span><div class="track" role="img" aria-label="${label} ${v}%"><i style="width:${v/max*100}%"></i></div><b class="num">${v}%</b>`;
+    row.querySelector("span").textContent = label; alloc.appendChild(row);
+  });
+
+  // honour roll
+  const roll = $("#roll"), donors = (CONFIG.donors || []).slice().sort((a,b) => b.amount - a.amount);
+  TIERS.forEach((t, i) => {
+    const upper = i === 0 ? Infinity : TIERS[i-1].min;
+    const people = donors.filter(p => p.amount >= t.min && p.amount < upper);
+    const el = document.createElement("div"); el.className = "tier";
+    el.innerHTML = `<span class="medal" style="background:${t.color}">${i+1}</span><h3>Hạng ${t.name}</h3><span class="min num">${i === 2 ? "Mọi tấm lòng" : "Từ " + money(t.min)}</span><ul></ul>`;
+    const ul = el.querySelector("ul");
+    if (!people.length){ const li = document.createElement("li"); li.className = "empty"; li.textContent = i === 0 ? "Còn trống. Ghế này đợi bạn." : "Còn trống, chưa ai ngồi."; ul.appendChild(li); }
+    people.forEach(p => { const li = document.createElement("li"); const s = document.createElement("span"); s.textContent = p.name; const b = document.createElement("b"); b.className = "num"; b.textContent = money(p.amount); li.append(s, b); ul.appendChild(li); });
+    roll.appendChild(el);
+  });
+  if (!donors.length) setText("#roll-intro", "Chưa có ai được khắc tên. Người chuyển đầu tiên giữ ghế Kim cương cho tới khi có người chuyển nhiều hơn.");
+
+  // demo
+  $("#demo-banner").hidden = !isDemo; $("#demo-stamp").hidden = !isDemo;
+
+  // share / contact
+  const shareUrl = CONFIG.shareUrl || location.href.split("#")[0];
+  $("#fb-share").href = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(shareUrl);
+  if (CONFIG.contactUrl){ const c = $("#contact-btn"); c.href = CONFIG.contactUrl; c.hidden = false; }
+  $("#copy-link").addEventListener("click", e => copy(shareUrl, e.currentTarget, "Đã chép link. Dán vào nhóm lớp đi!"));
+}
+
+function pick(id){
+  state.itemId = id; state.custom = 0; $("#amount-input").value = "";
+  render(); bumpCoins();
+}
+
+/* ---------- interactions ---------- */
+$("#amount-input").addEventListener("input", e => {
+  const digits = e.target.value.replace(/\D/g,"").slice(0, 10);
+  const n = Number(digits || 0);
+  e.target.value = digits ? n.toLocaleString("vi-VN").replace(/,/g,".") : "";
+  state.custom = n;
+  render();
+});
+$("#donor-name").addEventListener("input", e => { state.donor = e.target.value; render(); });
+
+function bumpCoins(){
+  const g = $("#bowl-coins"); g.classList.remove("coin-drop"); void g.getBoundingClientRect(); g.classList.add("coin-drop");
+}
+
+let toastT = 0;
+function toast(msg){ const t = $("#toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove("show"), 2200); }
+
+function copy(text, btn, msg){
+  const done = () => { if (btn){ const o = btn.textContent; btn.classList.add("ok"); btn.textContent = btn.classList.contains("copy") ? "Đã chép" : o; setTimeout(() => { btn.classList.remove("ok"); btn.textContent = o; }, 1500); } toast(msg || "Đã chép"); };
+  const fallback = () => {
+    const ta = document.createElement("textarea"); ta.value = text; ta.setAttribute("readonly",""); ta.style.position = "fixed"; ta.style.opacity = "0";
+    document.body.appendChild(ta); ta.select();
+    let ok = false; try { ok = document.execCommand("copy"); } catch(_){}
+    ta.remove(); ok ? done() : toast("Không chép được, hãy bôi đen rồi chép tay: " + text);
+  };
+  try { navigator.clipboard.writeText(text).then(done, fallback); } catch(_) { fallback(); }
+}
+document.querySelectorAll("[data-copy]").forEach(b => b.addEventListener("click", () => {
+  const k = b.dataset.copy, c = current();
+  const v = k === "acc" ? CONFIG.accountNumber : k === "amount" ? String(c.amount || "") : transferNote();
+  if (!v) return toast("Tùy tâm nên không có số để chép");
+  copy(v, b, k === "acc" ? "Đã chép số tài khoản" : k === "amount" ? "Đã chép số tiền" : "Đã chép nội dung chuyển khoản");
+}));
+
+/* thank-you */
+const dlg = $("#thanks");
+$("#done-btn").addEventListener("click", () => {
+  const c = current();
+  setText("#cert-who", state.donor.trim() || "Mạnh Thường Quân Giấu Tên");
+  setText("#cert-item", c.gift);
+  setText("#cert-amt", c.amount ? `${money(c.amount)} ${noodles(c.amount)}` : "Tùy tâm · vô giá");
+  const rain = $("#rain"); rain.innerHTML = "";
+  if (!matchMedia("(prefers-reduced-motion: reduce)").matches){
+    for (let i=0;i<16;i++){ const coin = document.createElement("i"); coin.style.left = (30 + Math.random()*40) + "%"; coin.style.animationDelay = (i*0.07) + "s"; rain.appendChild(coin); }
+  }
+  if (typeof dlg.showModal === "function") dlg.showModal(); else dlg.setAttribute("open","");
+});
+$("#close-thanks").addEventListener("click", () => dlg.close ? dlg.close() : dlg.removeAttribute("open"));
+dlg.addEventListener("click", e => { if (e.target === dlg) dlg.close(); });
+
+/* boot */
+buildStatic();
+render();
+loadQrLib().then(lib => { qrLib = lib; renderQR(); }).catch(() => {
+  $("#qr-wait").textContent = "Không tải được thư viện vẽ QR. Hãy chuyển theo số tài khoản bên dưới.";
+});
+</script>
+</body>
+</html>
